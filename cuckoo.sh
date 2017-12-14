@@ -78,7 +78,7 @@ echo -e '\e[35m[+] Installing Yara \e[0m'
 
 	#Yara Dependencies
 	echo -e '\e[93m    [+] Dependencies \e[0m'
-	apt-get install libjansson-dev libmagic-dev bison -y >/dev/null 2>&1
+	apt-get install libjansson-dev libmagic-dev bison flex -y >/dev/null 2>&1
 
 	#Configure Yara for Cuckoo and Magic and then install
 	echo -e '\e[93m    [+] Git Clone \e[0m'
@@ -295,6 +295,7 @@ echo -e '\e[35m[+] Creating Cuckoo User \e[0m'
 
 	#Creates cuckoo system user
 	adduser --system cuckoo >/dev/null 2>&1
+	groupadd cuckoo
 	usermod -L cuckoo
 	usermod -a -G libvirtd cuckoo
 	usermod -a -G cuckoo $USER
@@ -306,8 +307,8 @@ function cuckoo_mod
 echo -e '\e[35m[+] Installing Modified Version of Cuckoo \e[0m'
 
 	#Option to install modified cuckoo version
-	su - cuckoo <<EOF
-cd
+su - cuckoo <<EOF
+cd /home/cuckoo
 wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar >/dev/null 2>&1
 git clone https://github.com/doomedraven/cuckoo-modified.git >/dev/null 2>&1
 mkdir vmshared
@@ -340,7 +341,7 @@ echo -e '\e[35m[+] Installing Mainstream Version of Cuckoo \e[0m'
 
 	#Option to install original cuckoo version
 	su - cuckoo <<EOF
-cd
+cd /home/cuckoo
 wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar
 git clone https://github.com/cuckoosandbox/cuckoo.git
 mkdir vmshared
