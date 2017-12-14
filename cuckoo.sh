@@ -211,10 +211,10 @@ iface ens160 inet dhcp
 # The primary Internal network interface
 auto ens192  #change interface to match
 iface ens192 inet static
-    address 192.168.100.100
+    address 192.168.56.100
     netmask 255.255.255.0
-    gateway 192.168.100.100
-    dns-nameservers 192.168.100.100
+    gateway 192.168.56.100
+    dns-nameservers 192.168.56.100
 
 # The Monitor Internal Network interface
 auto ens224  #change interface to match

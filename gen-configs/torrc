@@ -202,7 +202,7 @@
 ## address manually to your friends, uncomment this line:
 #PublishServerDescriptor 0
 
-TransListenAddress 192.168.100.100
+TransListenAddress 192.168.56.100
 TransPort 9040
-DNSListenAddress 192.168.100.100
+DNSListenAddress 192.168.56.100
 DNSPort 5353
