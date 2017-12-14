@@ -187,18 +187,6 @@ EOF
 
 }
 
-function kvm
-{
-
-
-}
-
-function virtualbox
-{
-
-
-}
-
 function vsphere {
 	echo "# This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
