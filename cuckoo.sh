@@ -16,7 +16,7 @@ function usage
 	echo 'Cuckoo Install Path -> Example /opt' #option 1
 	echo 'Database Password -> PostgreSQL password' #option 2
 	echo 'Public IP -> For web console' #option 3
-	echo 'Machinery -> kvm | virtualbox' #option 4
+	echo 'Machinery -> kvm | virtualbox | vsphere' #option 4
 	exit
 }
 
@@ -71,6 +71,7 @@ echo -e '\e[35m[+] Installing Dependencies \e[0m'
 	echo -e '\e[93m    [+] Copy Configuration Files \e[0m'
 	cp -r ./kvm-configs/ /tmp/
 	cp -r ./virtualbox-configs/ /tmp/
+	cp -r ./vsphere-configs/  /tmp/
 	cp -r ./gen-configs/ /tmp/
 
 echo -e '\e[35m[+] Installing Yara \e[0m'
@@ -198,6 +199,40 @@ function virtualbox
 
 }
 
+function vsphere {
+	echo "# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo  
+iface lo inet loopback
+#external facing
+auto ens160 #change interface to match
+iface ens160 inet dhcp
+
+# The primary Internal network interface
+auto ens192  #change interface to match
+iface ens192 inet static  
+    address 192.168.100.100
+    netmask 255.255.255.0
+    gateway 192.168.100.100
+    dns-nameservers 192.168.100.100
+
+# The Monitor Internal Network interface
+auto ens224  #change interface to match
+iface ens224 inet manual  
+    up ip address add 0/0 dev $IFACE
+    up ip link set $IFACE up
+    up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off  
+down ip link set $IFACE down" >> /etc/network/interfaces
+
+echo " ifconfig eth1 up  
+	ifconfig eth1 promisc  
+	exit 0  " >> /etc/rc.local
+
+
+}
 function create_cuckoo_user
 {
 
@@ -411,9 +446,11 @@ echo -e '\e[35m[+] Creating Startup Script for Cuckoo \e[0m'
 	if [ "$machine" = 'virtualbox' ]; then
 		echo -e '\e[96m    [+] Startup Script Set for VirtualBox \e[0m'
 		cp /tmp/virtualbox-configs/cuckooboot /usr/sbin/cuckooboot
-	else
+	if [ "$machine" = 'kvm' ]; then
 		echo -e '\e[93m    [+] Startup Script Set for KVM \e[0m'
 		cp /tmp/kvm-configs/cuckooboot /usr/sbin/cuckooboot
+	if [ "$machine" = 'vsphere' ]; then
+			cp /tmp/vsphere-configs/cuckooboot /usr/sbin/cuckooboot
 	fi
 
 	chmod +x  /usr/sbin/cuckooboot
