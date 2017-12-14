@@ -189,68 +189,12 @@ EOF
 function kvm
 {
 
-echo -e '\e[35m[+] Installing KVM \e[0m'
-
-	#Install KVM and virt-manager
-	apt-get install qemu-kvm libvirt-bin virt-manager libgl1-mesa-glx -y >/dev/null 2>&1
-
-	#Add current user to kvm and libvirt groups for admin
-	usermod -a -G kvm $USER
-	usermod -a -G libvirtd $USER
-
-	#Deactivate default network
-	echo -e '\e[93m    [+] Remove Default Virtual Network \e[0m'
-
-	virsh net-destroy default >/dev/null 2>&1
-
-	#Remove default network from libvirt configuration
-	virsh net-undefine default >/dev/null 2>&1
-
-	#Create cuckoo network configuration file
-	echo -e '\e[93m    [+] Create Cuckoo Virtual Network \e[0m'
-
-	cat >/tmp/cuckoo_net.xml <<EOF
-<network>
-	<name>cuckoo</name>
-	<bridge name='virbr0' stp='on' delay='0'/>
-	<domain name='cuckoo'/>
-	<ip address='192.168.100.1' netmask='255.255.255.0'>
-<dhcp>
-	<range start='192.168.100.128' end='192.168.100.254'/>
-</dhcp>
-</ip>
-</network>
-EOF
-
-	#Create new cuckoo network from xml configuration
-	virsh net-define --file /tmp/cuckoo_net.xml >/dev/null 2>&1
-
-	#Set cuckoo network to autostart
-	virsh net-autostart cuckoo >/dev/null 2>&1
-
-	#Start cuckoo network
-	virsh net-start cuckoo >/dev/null 2>&1
 
 }
 
 function virtualbox
 {
 
-	#Add virtualbox repository
-	apt-add-repository "deb http://download.virtualbox.org/virtualbox/debian xenial contrib"
-
-	#Add repository key
-	wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | apt-key add -
-	wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
-
-	#Update apt packages
-	apt-get update -y
-
-	#Install virtualbox
-	apt-get install virtualbox-5.1 -y
-
-	#Install dkms package
-	apt-get install dkms -y
 
 }
 
@@ -262,7 +206,6 @@ echo -e '\e[35m[+] Creating Cuckoo User \e[0m'
 	#Creates cuckoo system user
 	adduser --system cuckoo >/dev/null 2>&1
 	usermod -L cuckoo
-	usermod -a -G kvm cuckoo
 	usermod -a -G libvirtd cuckoo
 	usermod -a -G cuckoo $USER
 }
