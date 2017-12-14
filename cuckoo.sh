@@ -39,33 +39,33 @@ echo -e "\e[96m[+] DB Password: $passwd \e[0m"
 echo -e "\e[96m[+] Web Portal IP: $my_ip \e[0m"
 
 echo -e '\e[35m[+] APT Update \e[0m'
-	apt-get update -y >/dev/null 2>&1
+	apt-get update -y 
 
 echo -e '\e[35m[+] APT Upgrade \e[0m'
-	apt-get upgrade -y >/dev/null 2>&1
+	apt-get upgrade -y 
 
 echo -e '\e[35m[+] APT Dist-Upgrade and Autoremove \e[0m'
-	apt-get dist-upgrade -y >/dev/null 2>&1
-	apt-get autoremove -y >/dev/null 2>&1
+	apt-get dist-upgrade -y 
+	apt-get autoremove -y 
 
 echo -e '\e[35m[+] Installing Dependencies \e[0m'
 
 	#Basic dependencies
 	echo -e '\e[93m    [+] Round 1 of 3 \e[0m'
-	apt-get install mongodb python python-dev python-pip python-m2crypto swig -y >/dev/null 2>&1
+	apt-get install mongodb python python-dev python-pip python-m2crypto swig -y 
 	echo -e '\e[93m    [+] Round 2 of 3 \e[0m'
-	apt-get install libvirt-dev upx-ucl libssl-dev unzip p7zip-full libgeoip-dev libjpeg-dev -y >/dev/null 2>&1
+	apt-get install libvirt-dev upx-ucl libssl-dev unzip p7zip-full libgeoip-dev libjpeg-dev -y 
 	echo -e '\e[93m    [+] Round 3 of 3 \e[0m'
-	apt-get install mono-utils ssdeep libfuzzy-dev libimage-exiftool-perl openjdk-8-jre-headless -y >/dev/null 2>&1
+	apt-get install mono-utils ssdeep libfuzzy-dev libimage-exiftool-perl openjdk-8-jre-headless -y 
 
 	#Additional dependencies for malheur
-	apt-get install uthash-dev libtool libconfig-dev libarchive-dev autoconf automake checkinstall -y >/dev/null 2>&1
+	apt-get install uthash-dev libtool libconfig-dev libarchive-dev autoconf automake checkinstall -y 
 
 	#Upgrade pip
-	pip install --upgrade pip >/dev/null 2>&1
+	pip install --upgrade pip 
 
 	#To generate PDF reports
-	apt-get install wkhtmltopdf xvfb xfonts-100dpi -y >/dev/null 2>&1
+	apt-get install wkhtmltopdf xvfb xfonts-100dpi -y 
 
 	#Copy default configs
 	echo -e '\e[93m    [+] Copy Configuration Files \e[0m'
@@ -78,72 +78,72 @@ echo -e '\e[35m[+] Installing Yara \e[0m'
 
 	#Yara Dependencies
 	echo -e '\e[93m    [+] Dependencies \e[0m'
-	apt-get install libjansson-dev libmagic-dev bison flex -y >/dev/null 2>&1
+	apt-get install libjansson-dev libmagic-dev bison flex -y 
 
 	#Configure Yara for Cuckoo and Magic and then install
 	echo -e '\e[93m    [+] Git Clone \e[0m'
 	cd /opt
-	git clone https://github.com/VirusTotal/yara.git >/dev/null 2>&1
+	git clone https://github.com/VirusTotal/yara.git 
 	cd yara
-	./bootstrap.sh >/dev/null 2>&1
+	./bootstrap.sh 
 	echo -e '\e[93m    [+] Configure with Cuckoo and Magic Enabled \e[0m'
-	./configure --enable-cuckoo --enable-magic >/dev/null 2>&1
-	make >/dev/null 2>&1
+	./configure --enable-cuckoo --enable-magic 
+	make 
 	echo -e '\e[93m    [+] Installing... \e[0m'
-	make install >/dev/null 2>&1
+	make install 
 
 	#Install yara-python
 	echo -e '\e[93m    [+] Yara-Python \e[0m'
-	pip install yara-python >/dev/null 2>&1
+	pip install yara-python 
 
 echo -e '\e[35m[+] Installing ClamAV \e[0m'
 
 	#Install ClamAV
-	apt-get install clamav clamav-daemon clamav-freshclam -y >/dev/null 2>&1
+	apt-get install clamav clamav-daemon clamav-freshclam -y 
 
 echo -e '\e[35m[+] Installing Pydeep \e[0m'
 
 	#Install Pydeep
-	pip install git+https://github.com/kbandla/pydeep.git >/dev/null 2>&1
+	pip install git+https://github.com/kbandla/pydeep.git 
 
 echo -e '\e[35m[+] Installing Malheur \e[0m'
 
 	#Install malheur
 	echo -e '\e[93m    [+] Git Clone \e[0m'
 	cd /opt
-	git clone https://github.com/rieck/malheur.git >/dev/null 2>&1
+	git clone https://github.com/rieck/malheur.git 
 	cd malheur
-	./bootstrap >/dev/null 2>&1
+	./bootstrap 
 	echo -e '\e[93m    [+] Configure \e[0m'
-	./configure --prefix=/usr >/dev/null 2>&1
-	make >/dev/null 2>&1
+	./configure --prefix=/usr 
+	make 
 	echo -e '\e[93m    [+] Installing... \e[0m'
-	make install >/dev/null 2>&1
+	make install 
 
 echo -e '\e[35m[+] Installing Volatility \e[0m'
 
 	#Install volatility
 	echo -e '\e[93m    [+] Dependencies \e[0m'
-	apt-get install python-pil -y >/dev/null 2>&1
-	pip install distorm3 pycrypto openpyxl >/dev/null 2>&1
+	apt-get install python-pil -y 
+	pip install distorm3 pycrypto openpyxl 
 	echo -e '\e[93m    [+] Installing... \e[0m'
-	apt-get install volatility -y >/dev/null 2>&1
+	apt-get install volatility -y 
 
 echo -e '\e[35m[+] Installing PyV8 Javascript Engine (this will take some time) \e[0m'
 
 	#Additional dependencies for PyV8
 	echo -e '\e[93m    [+] Dependencies \e[0m'
-	apt-get install libboost-all-dev -y >/dev/null 2>&1
+	apt-get install libboost-all-dev -y 
 
 	#Install PyV8
 	echo -e '\e[93m    [+] Git Clone \e[0m'
 	cd /opt
-	git clone https://github.com/buffer/pyv8.git >/dev/null 2>&1
+	git clone https://github.com/buffer/pyv8.git 
 	cd pyv8
 	echo -e '\e[93m    [+] Build (this is the long part...)\e[0m'
-	python setup.py build >/dev/null 2>&1
+	python setup.py build 
 	echo -e '\e[93m    [+] Installing... \e[0m'
-	python setup.py install >/dev/null 2>&1
+	python setup.py install 
 
 echo -e '\e[35m[+] Configuring TcpDump \e[0m'
 
@@ -153,18 +153,18 @@ echo -e '\e[35m[+] Configuring TcpDump \e[0m'
 echo -e '\e[35m[+] Installing Suricata \e[0m'
 
 	#Install Suricata
-	apt-get install suricata -y >/dev/null 2>&1
-	echo "alert http any any -> any any (msg:\"FILE store all\"; filestore; noalert; sid:15; rev:1;)"  | sudo tee /etc/suricata/rules/cuckoo.rules >/dev/null 2>&1
+	apt-get install suricata -y 
+	echo "alert http any any -> any any (msg:\"FILE store all\"; filestore; noalert; sid:15; rev:1;)"  | sudo tee /etc/suricata/rules/cuckoo.rules 
 
 echo -e '\e[35m[+] Installing ETUpdate \e[0m'
 
 	#Install ETUpdate
 	cd /opt
-	git clone https://github.com/seanthegeek/etupdate.git >/dev/null 2>&1
+	git clone https://github.com/seanthegeek/etupdate.git 
 	cp etupdate/etupdate /usr/sbin
 
 	#Download rules
-	/usr/sbin/etupdate -V >/dev/null 2>&1
+	/usr/sbin/etupdate -V 
 
 }
 
@@ -174,15 +174,15 @@ function postgres
 echo -e '\e[35m[+] Installing PostgreSQL \e[0m'
 
 	#Install PostgreSQL
-	apt-get install postgresql-9.5 postgresql-contrib-9.5 libpq-dev -y >/dev/null 2>&1
-	pip install psycopg2 >/dev/null 2>&1
+	apt-get install postgresql-9.5 postgresql-contrib-9.5 libpq-dev -y 
+	pip install psycopg2 
 
 echo -e '\e[35m[+] Configuring PostgreSQL DB \e[0m'
 
 	su - postgres <<EOF
-psql -c "CREATE USER cuckoo WITH PASSWORD $db_passwd;" >/dev/null 2>&1
-psql -c "CREATE DATABASE cuckoo;" >/dev/null 2>&1
-psql -c "GRANT ALL PRIVILEGES ON DATABASE cuckoo to cuckoo;" >/dev/null 2>&1
+psql -c "CREATE USER cuckoo WITH PASSWORD $db_passwd;" 
+psql -c "CREATE DATABASE cuckoo;" 
+psql -c "GRANT ALL PRIVILEGES ON DATABASE cuckoo to cuckoo;" 
 EOF
 
 }
@@ -193,7 +193,7 @@ function kvm
 echo -e '\e[35m[+] Installing KVM \e[0m'
 
 	#Install KVM and virt-manager
-	apt-get install qemu-kvm libvirt-bin virt-manager libgl1-mesa-glx -y >/dev/null 2>&1
+	apt-get install qemu-kvm libvirt-bin virt-manager libgl1-mesa-glx -y 
 
 	#Add current user to kvm and libvirt groups for admin
 	usermod -a -G kvm $USER
@@ -202,10 +202,10 @@ echo -e '\e[35m[+] Installing KVM \e[0m'
 	#Deactivate default network
 	echo -e '\e[93m    [+] Remove Default Virtual Network \e[0m'
 
-	virsh net-destroy default >/dev/null 2>&1
+	virsh net-destroy default 
 
 	#Remove default network from libvirt configuration
-	virsh net-undefine default >/dev/null 2>&1
+	virsh net-undefine default 
 
 	#Create cuckoo network configuration file
 	echo -e '\e[93m    [+] Create Cuckoo Virtual Network \e[0m'
@@ -224,13 +224,13 @@ echo -e '\e[35m[+] Installing KVM \e[0m'
 EOF
 	
 	#Create new cuckoo network from xml configuration
-	virsh net-define --file /tmp/cuckoo_net.xml >/dev/null 2>&1
+	virsh net-define --file /tmp/cuckoo_net.xml 
 
 	#Set cuckoo network to autostart
-	virsh net-autostart cuckoo >/dev/null 2>&1
+	virsh net-autostart cuckoo 
 
 	#Start cuckoo network
-	virsh net-start cuckoo >/dev/null 2>&1
+	virsh net-start cuckoo 
 
 }
 
@@ -294,7 +294,7 @@ function create_cuckoo_user
 echo -e '\e[35m[+] Creating Cuckoo User \e[0m'
 
 	#Creates cuckoo system user
-	adduser --system cuckoo >/dev/null 2>&1
+	adduser --system cuckoo 
 	groupadd cuckoo
 	#usermod -L cuckoo # doies this need to be done at all, if it does it may need to be moved
 	usermod -a -G cuckoo $USER
@@ -308,22 +308,22 @@ echo -e '\e[35m[+] Installing Modified Version of Cuckoo \e[0m'
 	#Option to install modified cuckoo version
 
 cd /home/cuckoo
-sudo wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar >/dev/null 2>&1
-sudo git clone https://github.com/doomedraven/cuckoo-modified.git >/dev/null 2>&1
+sudo wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar 
+sudo git clone https://github.com/doomedraven/cuckoo-modified.git 
 sudo mkdir vmshared
 sudo cp cuckoo-modified/agent/agent.py vmshared/agent.pyw
 
 
 chmod ug=rwX,o=rX /home/cuckoo/vmshared
 mv /home/cuckoo/cuckoo-modified $cuckoo_path/cuckoo
-pip install -r $cuckoo_path/cuckoo/requirements.txt >/dev/null 2>&1
+pip install -r $cuckoo_path/cuckoo/requirements.txt 
 cp /tmp/gen-configs/suricata-cuckoo.yaml /etc/suricata/suricata-cuckoo.yaml
 
 
 echo -e '\e[93m    [+] Installing Signatures \e[0m'
 
 sudo cd $cuckoo_path/cuckoo/utils
-sudo ./community.py -afw >/dev/null 2>&1
+sudo ./community.py -afw 
 
 echo -e '\e[93m    [+] Modifying Config \e[0m'
 
@@ -371,7 +371,7 @@ function nginx
 echo -e '\e[35m[+] Installing Nginx \e[0m'
 
 	#Install nginx
-	apt-get install nginx apache2-utils -y >/dev/null 2>&1
+	apt-get install nginx apache2-utils -y 
 
 echo -e '\e[93m    [+] Configuring \e[0m'
 
@@ -401,12 +401,12 @@ echo -e '\e[93m    [+] Creating Self-Signed SSL Certificate \e[0m'
 	mkdir /etc/nginx/ssl
 
 	#Generate self-signed certificate
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/cuckoo.key -out /etc/nginx/ssl/cuckoo.crt -subj "/C=XX/ST=XX/L=XX/O=IT/CN=$my_ip" >/dev/null 2>&1
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/cuckoo.key -out /etc/nginx/ssl/cuckoo.crt -subj "/C=XX/ST=XX/L=XX/O=IT/CN=$my_ip" 
 
 echo -e '\e[93m    [+] Generating Diffie-Hellman (DH) Parameters (this will take some time) \e[0m'
 
 	#Generate Diffie-Hellman (DH) parameters. This takes a long time!
-	openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048 >/dev/null 2>&1
+	openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048 
 
 	#Secure SSL keys
 	chown -R root:www-data /etc/nginx/ssl
@@ -424,11 +424,11 @@ echo -e '\e[35m[+] Installing Inetsim \e[0m'
 
 	#Install inetsim
 	cd /tmp
-	wget http://www.inetsim.org/debian/binary/inetsim_1.2.5-1_all.deb >/dev/null 2>&1
+	wget http://www.inetsim.org/debian/binary/inetsim_1.2.5-1_all.deb 
 
 	#Install additional inetsim dependencies
-	apt-get install libcgi-fast-perl libcgi-pm-perl libdigest-hmac-perl libfcgi-perl libio-multiplex-perl libio-socket-inet6-perl libipc-shareable-perl libnet-cidr-perl libnet-dns-perl libnet-ip-perl libnet-server-perl libsocket6-perl liblog-log4perl-perl -y >/dev/null 2>&1
-	dpkg -i inetsim_1.2.5-1_all.deb >/dev/null 2>&1
+	apt-get install libcgi-fast-perl libcgi-pm-perl libdigest-hmac-perl libfcgi-perl libio-multiplex-perl libio-socket-inet6-perl libipc-shareable-perl libnet-cidr-perl libnet-dns-perl libnet-ip-perl libnet-server-perl libsocket6-perl liblog-log4perl-perl -y 
+	dpkg -i inetsim_1.2.5-1_all.deb 
 
 	#Copy default inetsim config
 	cp /tmp/gen-configs/inetsim.conf /etc/inetsim/inetsim.conf
@@ -442,7 +442,7 @@ echo -e '\e[35m[+] Installing Inetsim \e[0m'
 echo -e '\e[35m[+] Installing Tor Proxy \e[0m'
 
 	#Install tor
-	apt-get install tor -y >/dev/null 2>&1
+	apt-get install tor -y 
 
 	#Copy default tor config
 	cp /tmp/gen-configs/torrc /etc/tor/torrc
@@ -453,7 +453,7 @@ echo -e '\e[35m[+] Installing Tor Proxy \e[0m'
 echo -e '\e[35m[+] Installing Privoxy \e[0m'
 
 	#Install Privoxy
-	apt-get install privoxy -y >/dev/null 2>&1
+	apt-get install privoxy -y 
 
 	#Copy default privoxy config
 	cp /tmp/gen-configs/privoxy_config /etc/privoxy/config
@@ -465,7 +465,7 @@ echo -e '\e[35m[+] Installing Routetor \e[0m'
 
 	#Install cuckoo scripts to utilize tor
 	cd /opt
-	git clone https://github.com/seanthegeek/routetor.git >/dev/null 2>&1
+	git clone https://github.com/seanthegeek/routetor.git 
 	cd routetor
 	cp *tor* /usr/sbin
 	/usr/sbin/routetor &
@@ -478,7 +478,7 @@ echo -e '\e[35m[+] Installing Vsftpd \e[0m'
 	chmod 777 /home/cuckoo/vmshared/pub
 
 	#Install vsftpd
-	apt-get install vsftpd -y >/dev/null 2>&1
+	apt-get install vsftpd -y 
 
 	#Copy vsftpd config file
 	cp /tmp/gen-configs/vsftpd.conf /etc/vsftpd.conf
@@ -494,7 +494,7 @@ function startup_script
 echo -e '\e[35m[+] Creating Startup Script for Cuckoo \e[0m'
 
 	#Install gunicorn
-	pip install gunicorn >/dev/null 2>&1
+	pip install gunicorn 
 
 	#Copy default startup script
 	if [ "$machine" = 'virtualbox' ]; then
