@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 # Thanks to Sean Whalen for this amazing post:
 # https://infosecspeakeasy.org/t/howto-build-a-cuckoo-sandbox/27
@@ -204,7 +204,7 @@ function vsphere {
 # and how to activate them. For more information, see interfaces(5).
 
 # The loopback network interface
-auto lo  
+auto lo
 iface lo inet loopback
 #external facing
 auto ens160 #change interface to match
@@ -212,7 +212,7 @@ iface ens160 inet dhcp
 
 # The primary Internal network interface
 auto ens192  #change interface to match
-iface ens192 inet static  
+iface ens192 inet static
     address 192.168.100.100
     netmask 255.255.255.0
     gateway 192.168.100.100
@@ -220,15 +220,15 @@ iface ens192 inet static
 
 # The Monitor Internal Network interface
 auto ens224  #change interface to match
-iface ens224 inet manual  
+iface ens224 inet manual
     up ip address add 0/0 dev $IFACE
     up ip link set $IFACE up
     up ip link set $IFACE promisc on
-down ip link set $IFACE promisc off  
+down ip link set $IFACE promisc off
 down ip link set $IFACE down" >> /etc/network/interfaces
 
-echo " ifconfig eth1 up  
-	ifconfig eth1 promisc  
+echo " ifconfig eth1 up
+	ifconfig eth1 promisc
 	exit 0  " >> /etc/rc.local
 
 
@@ -446,10 +446,10 @@ echo -e '\e[35m[+] Creating Startup Script for Cuckoo \e[0m'
 	if [ "$machine" = 'virtualbox' ]; then
 		echo -e '\e[96m    [+] Startup Script Set for VirtualBox \e[0m'
 		cp /tmp/virtualbox-configs/cuckooboot /usr/sbin/cuckooboot
-	if [ "$machine" = 'kvm' ]; then
+	elif [ "$machine" = 'kvm' ]; then
 		echo -e '\e[93m    [+] Startup Script Set for KVM \e[0m'
 		cp /tmp/kvm-configs/cuckooboot /usr/sbin/cuckooboot
-	if [ "$machine" = 'vsphere' ]; then
+	elif [ "$machine" = 'vsphere' ]; then
 			cp /tmp/vsphere-configs/cuckooboot /usr/sbin/cuckooboot
 	fi
 
@@ -492,8 +492,8 @@ if [ "$4" = 'virtualbox' ]; then
 	self_ssl
 	misc_apps
 	startup_script
-	
-if [ "$4" = 'vsphere' ]; then
+
+elif [ "$4" = 'vsphere' ]; then
 
 	deps
 	postgres
