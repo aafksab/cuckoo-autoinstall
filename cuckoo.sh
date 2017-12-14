@@ -222,7 +222,7 @@ echo -e '\e[35m[+] Installing KVM \e[0m'
 </ip>
 </network>
 EOF
-
+	
 	#Create new cuckoo network from xml configuration
 	virsh net-define --file /tmp/cuckoo_net.xml >/dev/null 2>&1
 
@@ -236,7 +236,7 @@ EOF
 
 function virtualbox
 {
-
+	
 	#Add virtualbox repository
 	apt-add-repository "deb http://download.virtualbox.org/virtualbox/debian xenial contrib"
 
@@ -296,8 +296,7 @@ echo -e '\e[35m[+] Creating Cuckoo User \e[0m'
 	#Creates cuckoo system user
 	adduser --system cuckoo >/dev/null 2>&1
 	groupadd cuckoo
-	usermod -L cuckoo
-	usermod -a -G libvirtd cuckoo
+	#usermod -L cuckoo # doies this need to be done at all, if it does it may need to be moved
 	usermod -a -G cuckoo $USER
 }
 
