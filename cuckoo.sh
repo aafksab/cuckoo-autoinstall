@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 # Thanks to Sean Whalen for this amazing post:
 # https://infosecspeakeasy.org/t/howto-build-a-cuckoo-sandbox/27
@@ -189,16 +189,14 @@ EOF
 
 function kvm
 {
-
+	echo "kvm"
 
 }
-
 function virtualbox
 {
-
+	echo "virtualbox"
 
 }
-
 function vsphere {
 	echo "# This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
