@@ -187,6 +187,18 @@ EOF
 
 }
 
+function kvm
+{
+
+
+}
+
+function virtualbox
+{
+
+
+}
+
 function vsphere {
 	echo "# This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
@@ -480,7 +492,18 @@ if [ "$4" = 'virtualbox' ]; then
 	self_ssl
 	misc_apps
 	startup_script
+	
+if [ "$4" = 'vsphere' ]; then
 
+	deps
+	postgres
+	vsphere
+	create_cuckoo_user
+	cuckoo_mod
+	nginx
+	self_ssl
+	misc_apps
+	startup_script
 else
 
 	deps
