@@ -255,6 +255,7 @@ function virtualbox
 
 }
 function vsphere {
+sudo pip install pyvmomi
 	echo "# This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -285,7 +286,8 @@ down ip link set $IFACE down" >> /etc/network/interfaces
 echo " ifconfig eth1 up
 	ifconfig eth1 promisc
 	exit 0  " >> /etc/rc.local
-
+sudo ifconfig ens192 up
+sudo ifconfig ens224
 
 }
 function create_cuckoo_user
@@ -306,24 +308,26 @@ function cuckoo_mod
 echo -e '\e[35m[+] Installing Modified Version of Cuckoo \e[0m'
 
 	#Option to install modified cuckoo version
+sudo su cuckoo
+	cd
+	sudo wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar 
+ 	sudo git clone https://github.com/doomedraven/cuckoo-modified.git 
+ 	mkdir vmshared
+ 	cp cuckoo-modified/agent/agent.py vmshared/agent.pyw
+ exit
 
-cd /home/cuckoo
-sudo wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar 
-sudo git clone https://github.com/doomedraven/cuckoo-modified.git 
-sudo mkdir vmshared
-sudo cp cuckoo-modified/agent/agent.py vmshared/agent.pyw
 
-
-chmod ug=rwX,o=rX /home/cuckoo/vmshared
-mv /home/cuckoo/cuckoo-modified $cuckoo_path/cuckoo
-pip install -r $cuckoo_path/cuckoo/requirements.txt 
-cp /tmp/gen-configs/suricata-cuckoo.yaml /etc/suricata/suricata-cuckoo.yaml
+sudo chmod ug=rwX,o=rX /home/cuckoo/vmshared
+sudo mv /home/cuckoo/cuckoo-modified $cuckoo_path/cuckoo
+sudo pip install -r $cuckoo_path/cuckoo/requirements.txt 
+sudo cp /tmp/gen-configs/suricata-cuckoo.yaml /etc/suricata/suricata-cuckoo.yaml
 
 
 echo -e '\e[93m    [+] Installing Signatures \e[0m'
-
-sudo cd $cuckoo_path/cuckoo/utils
-sudo ./community.py -afw 
+sudo su cuckoo
+	cd $cuckoo_path/cuckoo/utils
+	./community.py -afw 
+exit
 
 echo -e '\e[93m    [+] Modifying Config \e[0m'
 
@@ -338,13 +342,13 @@ function cuckoo_orig
 echo -e '\e[35m[+] Installing Mainstream Version of Cuckoo \e[0m'
 
 	#Option to install original cuckoo version
-
-sudo cd /home/cuckoo
-sudo wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar
-sudo git clone https://github.com/cuckoosandbox/cuckoo.git
-sudo mkdir vmshared
-sudo cp cuckoo/agent/agent.py vmshared/agent.pyw
-
+sudo su cuckoo
+	 cd
+	 wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar
+	 git clone https://github.com/cuckoosandbox/cuckoo.git
+	 mkdir vmshared
+	 cp cuckoo/agent/agent.py vmshared/agent.pyw
+ exit
 
 chmod ug=rwX,o=rX /home/cuckoo/vmshared
 mv /home/cuckoo/cuckoo $cuckoo_path/cuckoo
@@ -353,10 +357,10 @@ cp /tmp/gen-configs/suricata-cuckoo.yaml /etc/suricata/suricata-cuckoo.yaml
 
 echo -e '\e[35m[+] Installing Cuckoo Signatures \e[0m'
 
-	su - cuckoo <<EOF
-cd $cuckoo_path/cuckoo/utils
-./community.py -afw
-EOF
+sudo su cuckoo
+	cd $cuckoo_path/cuckoo/utils
+	./community.py -afw
+exit
 
 echo -e '\e[35m[+] Modifing Cuckoo Config \e[0m'
 
