@@ -286,8 +286,9 @@ down ip link set $IFACE down" >> /etc/network/interfaces
 echo " ifconfig eth1 up
 	ifconfig eth1 promisc
 	exit 0  " >> /etc/rc.local
+	
 sudo ifconfig ens192 up
-sudo ifconfig ens224
+sudo ifconfig ens224 up
 
 }
 function create_cuckoo_user
