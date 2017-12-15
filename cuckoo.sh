@@ -297,7 +297,7 @@ function create_cuckoo_user
 echo -e '\e[35m[+] Creating Cuckoo User \e[0m'
 
 	#Creates cuckoo system user
-	adduser --password changeme --gecos "" cuckoo 
+	adduser --gecos "" cuckoo 
 	
 	usermod -L cuckoo # doies this need to be done at all, if it does it may need to be moved
 	usermod -a -G cuckoo $USER
